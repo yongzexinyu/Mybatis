@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace:映射文件的命名空间，规范是映射文件的全路径-->
+<!--作用:是一个路径，用来查找、下面的id-->
+<mapper namespace="com.hp.dao.PersonDao"><!--命名空间-->
+<resultMap id="BaseResultMap" type="com.hp.util.Person">
+
+
+    <id column="id" property="id"/>
+    <result column="name" property="name"/>
+    <result column="gender" property="gender"/>
+    <result column="birthday" property="birthday"/>
+    <result column="address" property="address"/>
+    <result column="score" property="score"/>
+
+
+
+</resultMap>
+    <sql id="allColumn" >
+      id ,name, gender, birthday ,address ,score
+    </sql>
+
+    <sql id="birthdayColumn" >
+      id ,name, gender,  address ,score
+    </sql>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from person
+    </select>
+    <select id="selectPersonBySex" resultMap="BaseResultMap" parameterType="int">
+        select  <include refid="birthdayColumn"/>  from person where gender=#{gender}
+    </select>
+
+    <select id="selectPersonCount" resultType="long">
+        select count(*) from person
+    </select>
+  <!--  当前端传来多个参数的时候 要看这几个参数是否是同一个类中属性（这个是单表）如果是可以用这个属性做参数
+    如果不是同一个类中的（这个是多表） 那么可以 手写一个参数的实体类（DTO）或者使用map做参数-->
+
+    <select id="selectPersonByParmterCount01" resultType="long" parameterType="com.hp.util.Person">
+        select count(*) from person where gender=#{gender} and score>#{score}
+    </select>
+
+   <!-- 查询性别是2 且生日大于2020-09-07的人有哪些？-->
+    <select id="selectPersonByParmterCount02"  parameterType="map" resultMap="BaseResultMap">
+       <![CDATA[  select * from person where gender=#{gender} and birthday < #{birthday}]]>
+    </select>
+    <!--查询最高分数的人-->
+
+   <!-- <select id="selectPersonMax"  parameterType="int" resultMap="BaseResultMap">
+        select * from person order by score=#{score} desc limit 1;
+    </select>
+    <select id="selectMaxScore"  resultType="int">
+        select Max(score) from person
+    </select>-->
+<!--子查询-->
+    <select id="selectPersonMax" resultMap="BaseResultMap">
+       select * from person where score= (select Max(score) from person)
+    </select>
+
+    <select id="selectAvgScore"  resultType="com.hp.util.dto.PersonDTO">
+        select gender,avg (score) avgScore from person Group by gender;
+    </select>
+
+    <select id="selectAvgScore1"  parameterType="int" resultType="com.hp.util.dto.PersonDTO">
+        select gender,avg (score) avgScore from person Group by gender having avg(score)> #{score};
+    </select>
+
+    <select id="selectAvgScore2"  resultType="map" parameterType="int">
+        select gender,avg (score) avgScore from person Group by gender having avg(score)> #{score};
+    </select>
+<!--第一种方式-->
+    <select id="selectPersonByLike" resultMap="BaseResultMap"  parameterType="String">
+/*使用$去拼接，sql编译的时候没有？ 不安全 容易被sql注入*/
+        select * from person where name like '${name}%'
+    </select>
+<!--第二种方式 使用sql的concat的连接 可以被编译的-->
+    <select id="selectPersonByLike2" resultMap="BaseResultMap"  parameterType="String">
+/*可以被编译的*/
+        select * from person where name like concat ('%',#{name},'%')
+    </select>
+<!--第三种方式-->
+    <select id="selectPersonByLike3" resultMap="BaseResultMap"  parameterType="String">
+
+        select * from person where name like "%"#{name}"%"
+    </select>
+
+
+
+    <!--增加-->
+    <insert id="insertPerson" parameterType="com.hp.util.Person">
+    insert into person (id,name,gender,birthday,address,score) values (null,#{name},#{gender},#{birthday},#{address},#{score})
+    </insert>
+    <!--/////////////////////////////////////////////////-->
+
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.hp.dao.StudentDao">
+ 
+
+  <select id="select01" resultType="map" parameterType="map">
+  select s.*,sc1.s_score '语文',sc2.s_score '数学' from student s left join score sc1 on s.s_id=sc1.s_id and sc1.c_id=#{c_id1} left join  score sc2  on s.s_id=sc2.s_id and sc2.c_id=#{c_id2} where sc1.s_score>sc2.s_score
+  </select>
+
+
+	<select id="select02" resultType="map" parameterType="map">
+        <![CDATA[ select s.*,sc1.s_score '语文',sc2.s_score '数学' from student s left join score sc1 on s.s_id=sc1.s_id and sc1.c_id=#{c_id1} left join  score sc2  on s.s_id=sc2.s_id and sc2.c_id=#{c_id2} where sc1.s_score < sc2.s_score ]]>
+	</select>
+
+    <select id="select03" resultType="map" parameterType="map">
+        select s.s_id '学号',s.s_name '姓名',avg(sc.s_score) '平均分' from student s ,score sc where s.s_id=sc.s_id GROUP BY s.s_id having avg(sc.s_score) >= #{s_score}
+    </select>
+
+    <select id="select04" resultType="map" parameterType="map">
+
+        <![CDATA[  select s.s_id '学号',s.s_name '姓名',avg(sc.s_score) '平均分' from student s ,score sc where s.s_id=sc.s_id GROUP BY s.s_id having avg(sc.s_score) <= #{s_score} or avg(sc.s_score) is null]]>
+    </select>
+
+    <select id="select05" resultType="map" parameterType="map">
+        select s.s_id '学生编号',s.s_name '学生姓名',count(c.c_name) '选课总数',sum(sc.s_score) '总成绩' from student s,course c,score sc where s.s_id=sc.s_id and c.c_id=sc.c_id group by s.s_id
+
+    </select>
+
+    <select id="select06" resultType="map" parameterType="String">
+        select  count(t_name) from teacher  where t_name like "%"#{s_name}"%"
+    </select>
+
+    <select id="select07" resultType="map" parameterType="String">
+        select a.* from
+        student a
+        join score b on a.s_id=b.s_id where b.c_id in(
+        select c_id from course where t_id =(
+        select t_id from teacher where t_name = #{name}));
+
+    </select>
+
+    <select id="select08" resultType="map" parameterType="String">
+        select * from
+        student c
+        where c.s_id not in(
+        select a.s_id from student a join score b on a.s_id=b.s_id where b.c_id in(
+        select c_id from course where t_id =(
+        select t_id from teacher where t_name = #{name})));
+    </select>
+
+    <select id="select09" resultType="map" parameterType="map">
+        select a.* from
+        student a,score b,score c
+        where a.s_id = b.s_id  and a.s_id = c.s_id and b.c_id=#{cid1} and c.c_id=#{cid2};
+
+    </select>
+
+    <select id="select10" resultType="map" parameterType="map">
+        select a.* from
+        student a
+        where a.s_id in (select s_id from score where c_id=#{cid1} ) and a.s_id not in(select s_id from score where c_id=#{cid2})
+
+    </select>
+</mapper>
