@@ -61,4 +61,5 @@
         where a.s_id in (select s_id from score where c_id=#{cid1} ) and a.s_id not in(select s_id from score where c_id=#{cid2})
 
     </select>
+
 </mapper>
