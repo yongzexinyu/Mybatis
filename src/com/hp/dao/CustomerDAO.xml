@@ -319,4 +319,22 @@
   <select id="selectCustomer" resultType="map">
     select count(*) 总人数,avg(sal) 平均分数,education 学历 from customer group by education
   </select>
+  <select id="selectCustomerAndEmp" resultType="map">
+    select sum(c.money) 总销售额 ,e.ename from customer c , emp e where c.empno=e.empno group by e.ename
+  </select>
+  <select id="selectCustomerAndEmp1" resultType="map">
+    select  e.ename from customer c right join emp e on c.empno=e.empno group by e.ename HAVING sum(c.money)>2000000
+  </select>
+
+  <update id="updateByPrimaryKey1" parameterType="map">
+    update  customer set tel=#{tel} where cname=#{cname}
+  </update>
+
+  <update id="updateByPrimaryKey2" parameterType="map">
+    Update customer set remarks=#{remarks} where sal>#{sal} and money>#{money}
+  </update>
+
+  <update id="updateByPrimaryKey3" parameterType="map">
+    Delete from customer where cname=#{cname}
+  </update>
 </mapper>

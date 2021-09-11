@@ -1,6 +1,7 @@
 package com.hp.util;
 
 import java.util.Date;
+import java.util.List;
 
 public class Person {
     private  int id;
@@ -9,6 +10,7 @@ public class Person {
     private Date birthday;
     private  String address;
     private int score;
+    private List<Orders> orders;
 
 
     public int getId() {
@@ -17,14 +19,23 @@ public class Person {
 
     @Override
     public String toString() {
-        return "com.hp.util.Person{" +
+        return "Person{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", gender=" + gender +
                 ", birthday=" + birthday +
                 ", address='" + address + '\'' +
                 ", score=" + score +
+                ", orders=" + orders +
                 '}';
+    }
+
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
     }
 
     public void setId(int id) {

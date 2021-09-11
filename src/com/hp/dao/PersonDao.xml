@@ -175,4 +175,47 @@
               #{id}
           </foreach>
     </delete>
+<!--多表的关系需要程序员自定义一个resultMap 标签-->
+    <resultMap id="selectOrdersByPersonIdRM" type="com.hp.util.Person" extends="BaseResultMap">
+       <!-- <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="address" property="address"/>
+        <result column="score" property="score"/>-->
+        <collection property="orders" ofType="com.hp.util.Orders">
+            <id column="orders_id" jdbcType="INTEGER" property="ordersId" />
+            <result column="person_id" jdbcType="INTEGER" property="personId" />
+            <result column="total_price" jdbcType="DOUBLE" property="totalPrice" />
+            <result column="addr" jdbcType="VARCHAR" property="addr" />
+        </collection>
+    </resultMap>
+    <select id="selectOrdersByPersonId" resultMap="selectOrdersByPersonIdRM" parameterType="map">
+        select * from orders o join person p on p.id=o.person_id
+<where>
+    <if test="id !=null and id != '' ">
+        p.id= #{id}
+    </if>
+
+        <if test="name !=null and name != '' ">
+         and   p.name= #{name}
+        </if>
+
+        <if test="gender !=null and gender != '' ">
+            and    p.gender= #{gender}
+        </if>
+
+        <if test="birthday !=null ">
+            and  p.birthday= #{birthday}
+        </if>
+
+        <if test="address !=null and address != '' ">
+            and  p.address= #{address}
+        </if>
+
+        <if test="score !=null and score != '' ">
+            and  p.score = #{score}
+        </if>
+</where>
+    </select>
 </mapper>

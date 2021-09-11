@@ -275,7 +275,51 @@ public class MybatisTest {
         }
         sqlSession.close();
     }
-
+    @Test
+    public  void  test34(){
+        HumanExample example=new HumanExample();//创建一个例子类
+        HumanExample.Criteria criteria=example.createCriteria();
+        criteria.andGenderEqualTo(1);
+        List<Human> objects = sqlSession.selectList("com.hp.dao.HumanDAO.selectByExample", example);
+        for (Human object : objects) {
+            System.out.println("object = " + object);
+        }
+        sqlSession.close();
+    }
+    @Test
+    public  void  test35(){
+        HumanExample example=new HumanExample();//创建一个例子类
+        HumanExample.Criteria criteria=example.createCriteria();
+        criteria.andIdEqualTo(1);
+        List<Human> objects = sqlSession.selectList("com.hp.dao.HumanDAO.selectByExample", example);
+        for (Human object : objects) {
+            System.out.println("object = " + object);
+        }
+        sqlSession.close();
+    }
+    @Test
+    public  void  test36(){
+        HumanExample example=new HumanExample();//创建一个例子类
+        HumanExample.Criteria criteria=example.createCriteria();
+        criteria.andScoreLessThan(80.0);
+        List<Human> objects = sqlSession.selectList("com.hp.dao.HumanDAO.selectByExample", example);
+        for (Human object : objects) {
+            System.out.println("object = " + object);
+        }
+        sqlSession.close();
+    }
+    @Test
+    public  void  test37(){
+        HumanExample example=new HumanExample();//创建一个例子类
+        HumanExample.Criteria criteria=example.createCriteria();
+        criteria.andScoreGreaterThan(80.0);
+        criteria.andGenderEqualTo(1);
+        List<Human> objects = sqlSession.selectList("com.hp.dao.HumanDAO.selectByExample", example);
+        for (Human object : objects) {
+            System.out.println("object = " + object);
+        }
+        sqlSession.close();
+    }
     /////////////////////////////
     @Test
     public  void test20(){
@@ -363,6 +407,154 @@ public class MybatisTest {
         List<Map> map = sqlSession.selectList("com.hp.dao.CustomerDAO.selectCustomer");
         for (Map map1 : map) {
             System.out.println("map1 = " + map1);
+        }
+        sqlSession.close();
+    }
+    @Test
+    public  void test29(){
+        List<Map> map=sqlSession.selectList("com.hp.dao.CustomerDAO.selectCustomerAndEmp");
+        for (Map map1 : map) {
+            System.out.println("map1 = " + map1);
+        }
+        sqlSession.close();
+    }
+    @Test
+    public void  test30(){
+        List<Map> maps = sqlSession.selectList("com.hp.dao.CustomerDAO.selectCustomerAndEmp1");
+        for (Map map : maps) {
+            System.out.println("map = " + map);
+        }
+        sqlSession.close();
+    }
+    @Test
+    public  void  test31(){
+
+        Map map=new HashMap();
+        map.put("cname","赵峰刚");
+        map.put("tel","18728392567");
+
+        int update = sqlSession.update("com.hp.dao.CustomerDAO.updateByPrimaryKey1", map);
+
+        System.out.println("update = " + update);
+        sqlSession.commit();
+        sqlSession.close();
+
+    }
+    @Test
+    public  void  test32(){
+
+        Map map=new HashMap();
+        map.put("remarks","金标客户");
+        map.put("sal","5000");
+        map.put("money","500000");
+
+        int update = sqlSession.update("com.hp.dao.CustomerDAO.updateByPrimaryKey2", map);
+
+        System.out.println("update = " + update);
+        sqlSession.commit();
+        sqlSession.close();
+
+    }
+    @Test
+    public  void  test33(){
+
+        Map map=new HashMap();
+        map.put("cname","刘国华");
+
+        int update = sqlSession.update("com.hp.dao.CustomerDAO.updateByPrimaryKey3", map);
+
+        System.out.println("update = " + update);
+        sqlSession.commit();
+        sqlSession.close();
+
+    }
+    //工具的增加
+    @Test
+    public  void  test38(){
+        Human human=new Human();
+        human.setName("刘晓云");
+        human.setAddress("北京");
+        human.setGender(2);
+        int insert = sqlSession.insert("com.hp.dao.HumanDAO.insertSelective", human);
+        System.out.println("insert = " + insert);
+        sqlSession.commit();
+        sqlSession.close();
+    }
+    //工具的删除
+    @Test
+    public void  test39(){
+        int delete = sqlSession.delete("com.hp.dao.HumanDAO.deleteByPrimaryKey", 6);
+        System.out.println("delete = " + delete);
+        sqlSession.commit();
+        sqlSession.close();
+    }//按主键id删除
+    @Test
+    public  void test40(){//按条件删除
+        HumanExample example=new HumanExample();
+        HumanExample.Criteria criteria=example.createCriteria();
+        criteria.andScoreLessThan(20.0);
+        int delete = sqlSession.delete("com.hp.dao.HumanDAO.deleteByExample", example);
+        System.out.println("delete = " + delete);
+        sqlSession.commit();
+        sqlSession.close();
+    }//按条件删除
+    @Test
+    public  void test41(){
+        Human human=new Human();
+        human.setId(4);
+        human.setName("猪八戒");
+        int update = sqlSession.update("com.hp.dao.HumanDAO.updateByPrimaryKeySelective", human);
+        System.out.println("update = " + update);
+        sqlSession.commit();
+        sqlSession.close();
+    }//修改一条数据
+    @Test
+    public  void  test42(){
+        //mybatis测试不了
+        Human human=new Human();
+        human.setScore(100.0);
+        HumanExample example=new HumanExample();
+        HumanExample.Criteria criteria=example.createCriteria();
+        criteria.andScoreGreaterThan(100.0);
+    //    sqlSession.update("com.hp.dao.HumanDAO.updateByExampleSelective",human,example);
+    }//批量修改
+    @Test
+    public  void test43(){
+        Human o = sqlSession.selectOne("com.hp.dao.HumanDAO.selectByPrimaryKey", 4);
+        System.out.println("o = " + o);
+        sqlSession.close();
+    }//查询一条数据
+    @Test
+    public  void test44() throws ParseException {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        Date parse = simpleDateFormat.parse("2020-11-04");
+        HumanExample example=new HumanExample();
+        HumanExample.Criteria criteria=example.createCriteria();
+        criteria.andScoreGreaterThan(100.0);
+        criteria.andBirthdayGreaterThan(parse);
+        List<Human> objects = sqlSession.selectList("com.hp.dao.HumanDAO.selectByExample", example);
+        for (Human object : objects) {
+            System.out.println("object = " + object);
+        }
+        sqlSession.close();
+    }//动态查询
+    @Test
+    public void test45(){
+        Map ma=new HashMap();
+        ma.put("name","孙尚香");
+    List<Person> objects = sqlSession.selectList("com.hp.dao.PersonDao.selectOrdersByPersonId", ma);
+    for (Person object : objects) {
+        System.out.println("object = " + object);
+    }
+    sqlSession.close();
+}//mybatis一对多
+    @Test
+    public  void test46(){
+        Map map=new HashMap();
+        map.put("c_id",1);
+        List<City> cities = sqlSession.selectList("com.hp.dao.CityDAO.selectCityAndArea", map);
+        for (City city : cities) {
+            System.out.println("city = " + city);
         }
         sqlSession.close();
     }

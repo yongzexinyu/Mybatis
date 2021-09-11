@@ -24,6 +24,8 @@ public interface CustomerDAO {
     List<Map> selectShuangBiao();
     List<Map> selectShuangBiao1();
     List<Map> selectCustomer();
+    List<Map> selectCustomerAndEmp();
+    List<Map>  selectCustomerAndEmp1();
 
     Customer selectByPrimaryKey(Integer cno);
 
@@ -34,4 +36,8 @@ public interface CustomerDAO {
     int updateByPrimaryKeySelective(Customer record);
 
     int updateByPrimaryKey(Customer record);
+    int updateByPrimaryKey1(Map map);
+    int updateByPrimaryKey2(Map map);
+    int updateByPrimaryKey3(Map map);
+
 }

@@ -49,4 +49,6 @@ int insertPerson(Person person);
     int dongTaiUpdate(Person person);
     //批量删除
     void piLiangDel(Map map);
+
+    List<Person> selectOrdersByPersonId(Map map);
 }
