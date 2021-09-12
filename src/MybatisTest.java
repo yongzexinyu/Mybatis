@@ -153,7 +153,7 @@ public class MybatisTest {
     @Test
     public  void test13(){
         Person person=new Person();
-        person.setName("张三");
+        person.setName("sun三");
         person.setGender(2);
         person.setScore(100);
         person.setBirthday(new Date());
