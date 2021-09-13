@@ -1,5 +1,9 @@
 package test;
 
+import com.hp.util.Classleader;
+import com.hp.util.People;
+import com.hp.util.School;
+import com.hp.util.Student;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -132,6 +136,49 @@ public class MybatisTest1 {
 		List<Map> stus=	sqlSession.selectList("com.hp.dao.StudentDao.select10",map);
 		for(Map stu:stus) {
 			System.out.println("stu = " + stu);
+		}
+		sqlSession.close();
+	}
+
+	//作业1  写出 学校--学生--班级 的  1 对多  对多的 查询
+	@Test
+	public  void  test11(){
+		List<School> objects = sqlSession.selectList("com.hp.dao.SchoolDAO.selectAllBySchool", 1);
+		for (School object : objects) {
+			System.out.println("object = " + object);
+		}
+		sqlSession.close();
+	}
+	@Test
+	public  void test12(){
+	    	Map map=new HashMap();
+	    	map.put("sname","北京大学");
+		List<Map> maps = sqlSession.selectList("com.hp.dao.SchoolDAO.selectAllByParam", map);
+		for (Map map1 : maps) {
+			System.out.println("map1 = " + map1);
+		}
+		sqlSession.close();
+	}
+	@Test
+	public void test13(){
+		People o = sqlSession.selectOne("com.hp.dao.PeopleDAO.selectPeopleByIcCard", 1);
+		System.out.println("o = " + o);
+		sqlSession.close();
+	}
+	@Test
+	public  void test14(){
+		List<Student> objects = sqlSession.selectList("com.hp.dao.StudentDAO.selectAllByClassLeader", "张三");
+		for (Student object : objects) {
+			System.out.println("object = " + object);
+		}
+		sqlSession.close();
+	}
+
+	@Test
+	public  void test15(){
+		List<Map> maps = sqlSession.selectList("com.hp.dao.ClassleaderDAO.selectAllByStudent", "班长");
+		for (Map map : maps) {
+			System.out.println("map = " + map);	
 		}
 		sqlSession.close();
 	}

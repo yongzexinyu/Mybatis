@@ -558,4 +558,44 @@ public class MybatisTest {
         }
         sqlSession.close();
     }
+
+    //一对多对多  ---------》数据模型是个树状
+    @Test
+    public  void  test47(){
+        List<Person> objects = sqlSession.selectList("com.hp.dao.PersonDao.selectDetailByPersonId", 4);
+        for (Person object : objects) {
+            System.out.println("object = " + object);
+            /*
+            * */
+        }
+        sqlSession.close();
+    }
+    //三表联查 平面的 ... 这个关系 没有1对多 概念了 只有 关联关系！！ 平面结构
+    @Test
+    public  void test48(){
+        Map map=new HashMap();
+        map.put("id",4);
+        List<Map> maps = sqlSession.selectList("com.hp.dao.PersonDao.selectDetailByParm", map);
+        for (Map map1 : maps) {
+            System.out.println("map1 = " + map1);
+        }
+        sqlSession.close();
+    }
+    @Test
+    public  void test49(){
+        Orders o = sqlSession.selectOne("com.hp.dao.OrdersDAO.selectPersonByOrdersId", 3);
+        System.out.println("o = " + o);
+        sqlSession.close();
+    }
+    //1对1
+    @Test
+    public void test50(){
+        List<Person> personList = sqlSession.selectList("com.hp.dao.PersonDao.selectRoleByPname", "孙尚香");
+        for (Person person : personList) {
+            System.out.println("person = " + person);
+        }
+        sqlSession.close();
+    }
+///////作业1  写出 学校--学生--班级 的  1 对多  对多的 查询
+    //
 }

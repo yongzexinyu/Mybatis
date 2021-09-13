@@ -218,4 +218,51 @@
         </if>
 </where>
     </select>
+
+    <resultMap id="selectDetailByPersonIdRM" type="com.hp.util.Person" extends="BaseResultMap">
+        <collection property="orders" ofType="com.hp.util.Orders">
+            <id column="orders_id" jdbcType="INTEGER" property="ordersId" />
+            <result column="person_id" jdbcType="INTEGER" property="personId" />
+            <result column="total_price" jdbcType="DOUBLE" property="totalPrice" />
+            <result column="addr" jdbcType="VARCHAR" property="addr" />
+            <collection property="orderDetails" ofType="com.hp.util.OrderDetail">
+                <id column="detail_id" jdbcType="INTEGER" property="detailId" />
+                <result column="order_id" jdbcType="INTEGER" property="orderId" />
+                <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+                <result column="price" jdbcType="DOUBLE" property="price" />
+                <result column="count" jdbcType="INTEGER" property="count" />
+            </collection>
+        </collection>
+    </resultMap>
+
+    <!--1对多对多查询-->
+    <select id="selectDetailByPersonId" parameterType="int" resultMap="selectDetailByPersonIdRM">
+         select * from person p join orders o on o.person_id =p.id join order_detail od on od.order_id = o.orders_id where p.id=#{id};
+    </select>
+    <!--N表联查 随意传参数 随意返回值   和实体类中有无 集合没任何关系-->
+    <select id="selectDetailByParm" resultType="map" parameterType="map">
+
+          select * from person p join orders o on o.person_id =p.id join order_detail od on od.order_id = o.orders_id
+          <where>
+              <if test="id != null  and id != ''">
+                  p.id=#{id}
+              </if>
+              <if test="name != null and id != ''">
+                and  p.name=#{name}
+              </if>
+          </where>
+    </select>
+    <!--多对多的查询 根据人查找角色-->
+
+    <resultMap id="selectRoleByPnameRM" type="com.hp.util.Person" extends="BaseResultMap">
+        <collection property="roles" ofType="com.hp.util.Role">
+            <id column="role_id" jdbcType="INTEGER" property="roleId" />
+            <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+            <result column="desc" jdbcType="VARCHAR" property="desc" />
+        </collection>
+    </resultMap>
+    <select id="selectRoleByPname" resultMap="selectRoleByPnameRM" parameterType="string">
+        select * from person p join person_role prr on prr.personid=p.id join role r on r.role_id=prr.roleid
+        where p.name=#{name};
+    </select>
 </mapper>

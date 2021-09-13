@@ -32,5 +32,10 @@
 			<mapper resource="com/hp/dao/HumanDAO.xml"/>
 			<mapper resource="com/hp/dao/CustomerDAO.xml"/>
 			<mapper resource="com/hp/dao/CityDAO.xml"/>
+			<mapper resource="com/hp/dao/OrdersDAO.xml"/>
+			<mapper resource="com/hp/dao/RoleDAO.xml"/>
+			<mapper resource="com/hp/dao/PersonRoleDAO.xml"/>
+
+
 		</mappers>
 </configuration>

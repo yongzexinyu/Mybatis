@@ -51,4 +51,13 @@ int insertPerson(Person person);
     void piLiangDel(Map map);
 
     List<Person> selectOrdersByPersonId(Map map);
+
+    // 1 vs 多 vs 多 学校--班级--学生  省--市--县区  适用于下拉框
+    List<Person> selectDetailByPersonId(Integer id);
+    //三表联查 适用于数据表格 参数就是map !! 双map 返回值 和参数均为map 俗称万能查
+   //适用于动态sql的查询
+    List<Map> selectDetailByParm(Map map);
+
+    //多对多的查询
+    List<Person> selectRoleByPname(String name);
 }

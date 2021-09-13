@@ -9,9 +9,18 @@ public class Person {
     private  int gender;
     private Date birthday;
     private  String address;
+//多对多  不是中间表的
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     private int score;
     private List<Orders> orders;
-
+    private  List<Role> roles;
 
     public int getId() {
         return id;
@@ -27,6 +36,7 @@ public class Person {
                 ", address='" + address + '\'' +
                 ", score=" + score +
                 ", orders=" + orders +
+                ", roles=" + roles +
                 '}';
     }
 
