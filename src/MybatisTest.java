@@ -598,4 +598,40 @@ public class MybatisTest {
     }
 ///////作业1  写出 学校--学生--班级 的  1 对多  对多的 查询
     //
+    @Test
+    public  void  test51(){
+       /* Account o = sqlSession.selectOne("com.hp.dao.AccountDAO.selectById", 3);
+        System.out.println("o = " + o);
+        sqlSession.close();*/
+
+        Account o = sqlSession.selectOne("com.hp.dao.AccountDAO.selectByPrimaryKey", 3);
+        System.out.println("o = " + o);
+        sqlSession.close();
+    }
+    @Test
+    public  void  test52(){
+        AccountExample accountExample=new AccountExample();
+        AccountExample.Criteria criteria = accountExample.createCriteria();
+        criteria.andAccountNumEqualTo("xiexin");
+        Account o = sqlSession.selectOne("com.hp.dao.AccountDAO.selectByExample", accountExample);
+        System.out.println("o = " + o);
+        sqlSession.close();
+    }
+
+    @Test
+    public  void  test53(){
+      /*  Account account=new Account();
+        account.setAccountNum("xiexin");
+        account.setAccountPwd("50e0e9322dc571658099d11b7dc4bb36");*/
+     /* Map map=new HashMap();
+      map.put("account_num","xiexin");
+      map.put("account_pwd","50e0e9322dc571658099d11b7dc4bb36");*/
+        AccountExample accountExample=new AccountExample();
+        AccountExample.Criteria criteria = accountExample.createCriteria();
+        criteria.andAccountNumEqualTo("xiexin");
+        criteria.andAccountPwdEqualTo("50e0e9322dc571658099d11b7dc4bb36");
+        Account o = sqlSession.selectOne("com.hp.dao.AccountDAO.selectByExample", accountExample);
+        System.out.println("o = " + o);
+        sqlSession.close();
+    }
 }

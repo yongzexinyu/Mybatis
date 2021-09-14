@@ -22,5 +22,6 @@
 		<mapper resource="com/hp/dao/StudentDao.xml"/>
 		<mapper resource="com/hp/dao/SchoolDAO.xml"/>
 		<mapper resource="com/hp/dao/PeopleDAO.xml"/>
+		<mapper resource="com/hp/dao/ClassleaderDAO.xml"/>
 	</mappers>
 </configuration>

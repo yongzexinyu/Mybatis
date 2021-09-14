@@ -21,7 +21,7 @@
 			<transactionManager type="JDBC"></transactionManager>
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.cj.jdbc.Driver"></property>
-				<property name="url" value="jdbc:mysql://localhost:3306/sifa09mybatis?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false"/>
+				<property name="url" value="jdbc:mysql://localhost:3306/roadhelp?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false"/>
 				<property name="username" value="root"/>
 				<property name="password" value="123456"/>
 			</dataSource>
@@ -35,6 +35,7 @@
 			<mapper resource="com/hp/dao/OrdersDAO.xml"/>
 			<mapper resource="com/hp/dao/RoleDAO.xml"/>
 			<mapper resource="com/hp/dao/PersonRoleDAO.xml"/>
+			<mapper resource="com/hp/dao/AccountDAO.xml"/>
 
 
 		</mappers>
