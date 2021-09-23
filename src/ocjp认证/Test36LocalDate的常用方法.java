@@ -1,6 +1,8 @@
 package ocjp认证;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 public class Test36LocalDate的常用方法 {
@@ -12,6 +14,11 @@ public class Test36LocalDate的常用方法 {
         LocalDateTime localDateTime1 = dt.plusMonths(1);////在当前日期后推一个月
         System.out.println("localDateTime1 = " + localDateTime1);
         System.out.println(dt.format(DateTimeFormatter.ISO_DATE));
+
+        LocalDate startlocalDate=LocalDate.of(2021,8,24);
+        LocalDate endlocalDate=LocalDate.of(2022,9,18);
+        Period period=Period.between(startlocalDate,endlocalDate);
+        System.out.println("period = " + period);
     }
 /*
 * import org.joda.time.DateTime; //导入方法依赖的package包/类
